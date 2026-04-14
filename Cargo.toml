@@ -1,0 +1,8 @@
+[package]
+name = "Busca_vetor"
+version = "0.1.0"
+edition = "2024"
+default-run = "Busca_vetor"
+
+[dependencies]
+rand = "0.10.0"
