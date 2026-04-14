@@ -3,20 +3,20 @@
 ![Rust](https://img.shields.io/badge/rust-%23000000.svg?style=for-the-badge&logo=rust&logoColor=white)
 ![Status](https://img.shields.io/badge/Status-Conclu%C3%ADdo-success?style=for-the-badge)
 
-## 📖 Sobre o Projeto
+## Sobre o Projeto
 Este projeto foi desenvolvido como requisito acadêmico para explorar padrões de paralelismo, sincronização e comunicação entre processos na disciplina de Sistemas Operacionais / Programação Concorrente na Universidade Federal de Roraima (UFRR). 
 
 O sistema implementa um algoritmo de busca linear concorrente em um vetor de grande escala (1 bilhão de posições) alocado dinamicamente. Durante o desenvolvimento, o projeto evoluiu para um **estudo de caso prático sobre o custo de sincronização (Overhead)**, comparando o desempenho entre travas gerenciadas pelo Sistema Operacional (`Mutex`) e primitivas de hardware (`Atomic Operations`).
 
-## 🎯 Objetivo e Requisitos
-Dividir um vetor em duas partes e usar duas threads para procurar um número, otimizando o tempo de resposta através de mecanismos de *early exit* (saída antecipada).
+## Objetivo e Requisitos
+Dividir um vetor em duas partes e usar duas threads para procurar um número.
 
 **Critérios de implementação exigidos:**
 * Criar duas threads, cada uma responsável por metade do vetor.
 * Usar variável global para indicar se o elemento foi encontrado.
 * Proteger o acesso com exclusão mútua (`Mutex`) para evitar condição de corrida.
 
-## 🧠 Lógica de Concorrência Utilizada
+## Lógica de Concorrência Utilizada
 
 A arquitetura inicial do projeto baseia-se no padrão de **Particionamento de Dados (Data Partitioning)** utilizando as exigências da disciplina:
 
@@ -26,7 +26,7 @@ A arquitetura inicial do projeto baseia-se no padrão de **Particionamento de Da
 
 ---
 
-## 📊 Relatório de Desempenho: O Paradoxo do Mutex
+## Relatório de Desempenho: O Paradoxo do Mutex
 
 Durante os testes de estresse (Benchmarking) com um cenário de pior caso — buscando um alvo inexistente (`-1`) em um vetor de **1.000.000.000 (1 bilhão)** de inteiros —, os resultados revelaram um comportamento contra-intuitivo:
 
@@ -46,7 +46,7 @@ A cada iteração do loop, as threads precisavam verificar o `Mutex`. Para 1 bil
 
 ---
 
-## 🚀 Evolução Arquitetural: Operações Atômicas
+## Evolução Arquitetural: Operações Atômicas
 
 Para mitigar o gargalo de sincronização do `Mutex` e provar a eficiência da concorrência, foi desenvolvida uma segunda versão do algoritmo substituindo o bloqueio de software por primitivas de hardware.
 
@@ -58,7 +58,7 @@ O controle de estado foi refatorado utilizando `std::sync::atomic::AtomicBool`. 
 
 ---
 
-## 🛠️ Estrutura do Projeto e Execução
+## Estrutura do Projeto e Execução
 
 O projeto possui dois executáveis distintos para fins de comparação acadêmica.
 
