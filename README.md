@@ -30,12 +30,7 @@ A arquitetura inicial do projeto baseia-se no padrão de **Particionamento de Da
 
 Durante os testes de estresse (Benchmarking) com um cenário de pior caso — buscando um alvo inexistente (`-1`) em um vetor de **1.000.000.000 (1 bilhão)** de inteiros —, os resultados revelaram um comportamento contra-intuitivo:
 
-| Algoritmo | Tempo de Execução |
-| :--- | :--- |
-| **Busca Sequencial (1 Thread)** | `~427 ms` (Milissegundos) |
-| **Busca Concorrente (2 Threads + Mutex)** | `~30.7 s` (Segundos) |
-
-> **Comprovação Visual (Teste com Mutex):**
+> **(Teste com Mutex):**
 > <br>
 > ![Teste de Desempenho com Mutex](imagens/teste_mutex.png)
 
@@ -52,7 +47,7 @@ Para mitigar o gargalo de sincronização do `Mutex` e provar a eficiência da c
 
 O controle de estado foi refatorado utilizando `std::sync::atomic::AtomicBool`. Diferente do `Mutex`, as variáveis atômicas garantem a segurança da memória e a visibilidade entre threads em um único ciclo de clock da CPU (utilizando `Ordering::Relaxed`), dispensando o gerenciamento do Sistema Operacional e eliminando o *overhead*. Esta versão alcança a velocidade teórica máxima do hardware.
 
-> **Comprovação Visual (Teste com Variáveis Atômicas):**
+> **(Teste com Variáveis Atômicas):**
 > <br>
 > ![Teste de Desempenho com AtomicBool](imagens/teste_atomica.png)
 
@@ -63,7 +58,3 @@ O controle de estado foi refatorado utilizando `std::sync::atomic::AtomicBool`. 
 O projeto possui dois executáveis distintos para fins de comparação acadêmica.
 
 Para compilar e executar o projeto com desempenho máximo, certifique-se de usar a flag de otimização `--release`.
-
-**1. Rodar a versão exigida pela disciplina (Com Mutex):**
-```bash
-cargo run --release
